@@ -8,7 +8,7 @@ const doc = {
         title: 'My API',
         description: 'Project 02: API for CSE341'
     },
-    host: 'localhost:3000',    //  must be changed for the render url containing my project
+    host: 'localhost:3000',    // In the swagger.JSON, change for the render url containing my project  
     schemes: ['http', 'https']
 };
 
