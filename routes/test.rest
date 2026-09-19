@@ -1,0 +1,64 @@
+### Get all countries
+GET http://localhost:3000/countries
+
+### Get single country
+GET http://localhost:3000/countries/6aae762e91c183f467e668f4
+
+### Create a new country
+POST http://localhost:3000/countries
+Content-Type: application/json
+
+{
+    "country": "Mock",
+    "capital": "Mock",
+    "officialLanguages": ["Esperanto"],
+    "continent": "Europe",
+    "independenceDay": null,
+    "governmentType": "Constitution Monarchy",
+    "population": 6000000,
+    "landAreaKm2": 43094
+}
+
+### Update a country
+PUT http://localhost:3000/countries/6aae762e91c183f467e668f4
+Content-Type: application/json
+
+{
+    "population": 6300000
+}
+
+### Delete a country
+DELETE http://localhost:3000/countries/6aae80eb8639729480ad8000
+
+# --------------------------------------------------------------
+#                              USERS                           #
+# --------------------------------------------------------------
+
+### Get all users
+GET http://localhost:3000/users
+
+### Get a single user
+GET http://localhost:3000/users/6aaecfb3754d7020f1a7d9b6
+
+### Create a new user
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "firstName": "Ana",
+    "lastName": "Smith",
+    "email": "a_smith@gmail.com",
+    "role": "user"
+}
+
+### Update an user
+PUT http://localhost:3000/users/6aaed052754d7020f1a7d9b8
+Content-Type: application/json
+
+{
+    "role": "admin"
+}
+
+### Delete an user
+DELETE http://localhost:3000/users/6aaed02c754d7020f1a7d9b7
+

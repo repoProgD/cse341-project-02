@@ -1,0 +1,40 @@
+{
+    "name": "cse341-project-02",
+    "version": "1.0.0",
+    "description": "BYU-I cse341 project 2",
+    "keywords": [],
+    "homepage": "https://github.com/repoProgD/cse341-project-02#readme",
+    "bugs": {
+        "url": "https://github.com/repoProgD/cse341-project-02/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/repoProgD/cse341-project-02.git"
+    },
+    "license": "ISC",
+    "author": "Diego Ledesma",
+    "type": "commonjs",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
+        "format": "prettier --write ."
+    },
+    "dependencies": {
+        "body-parser": "^2.3.0",
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "express-validator": "^7.3.2",
+        "mongodb": "^7.6.0",
+        "swagger-ui-express": "^5.0.1"
+    },
+    "devDependencies": {
+        "eslint": "^10.11.0",
+        "eslint-config-prettier": "^10.1.8",
+        "globals": "^17.12.0",
+        "prettier": "^3.9.8",
+        "swagger-autogen": "^2.23.7"
+    }
+}
