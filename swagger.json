@@ -124,6 +124,39 @@
                         "in": "path",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "country": {
+                                    "example": "any"
+                                },
+                                "capital": {
+                                    "example": "any"
+                                },
+                                "officialLanguages": {
+                                    "example": "any"
+                                },
+                                "continent": {
+                                    "example": "any"
+                                },
+                                "independenceDay": {
+                                    "example": "any"
+                                },
+                                "governmentType": {
+                                    "example": "any"
+                                },
+                                "population": {
+                                    "example": "any"
+                                },
+                                "landAreaKm2": {
+                                    "example": "any"
+                                }
+                            }
+                        }
                     }
                 ],
                 "responses": {
@@ -242,6 +275,27 @@
                         "in": "path",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "name": "body",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "firstName": {
+                                    "example": "any"
+                                },
+                                "lastName": {
+                                    "example": "any"
+                                },
+                                "email": {
+                                    "example": "any"
+                                },
+                                "role": {
+                                    "example": "any"
+                                }
+                            }
+                        }
                     }
                 ],
                 "responses": {

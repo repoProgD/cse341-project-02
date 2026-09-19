@@ -70,6 +70,13 @@ const updateUser = async (req, res, next) => {
     //# swagger.tags = ['users']
     try {
         const userId = new ObjectId(req.params.id);
+
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            role: req.body.role
+        };
         
         const response = await mongodb
             .getDatabase()
@@ -77,7 +84,7 @@ const updateUser = async (req, res, next) => {
             .collection('users')
             .updateOne(
                 { _id: userId },
-                { $set: req.body }   // Only update those fields coming in the body
+                { $set: user }
             );
         
         if (response.matchedCount === 0) {

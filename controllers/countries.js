@@ -74,6 +74,17 @@ const updateCountry = async (req, res, next) => {
     //# swagger.tags = ['Countries']
     try {
         const countryId = new ObjectId(req.params.id);
+
+        const country = {
+            country: req.body.country,
+            capital: req.body.capital,
+            officialLanguages: req.body.officialLanguages,
+            continent: req.body.continent,
+            independenceDay: req.body.independenceDay,
+            governmentType: req.body.governmentType,
+            population: req.body.population,
+            landAreaKm2: req.body.landAreaKm2
+        };
         
         const response = await mongodb
             .getDatabase()
@@ -81,7 +92,7 @@ const updateCountry = async (req, res, next) => {
             .collection('countries')
             .updateOne(
                 { _id: countryId },
-                { $set: req.body }   // Only update those fields coming in the body
+                { $set: country } 
             );
         
         if (response.matchedCount === 0) {

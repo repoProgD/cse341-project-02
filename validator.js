@@ -105,19 +105,16 @@ const countryValidationRules = () => {
 const countryUpdateValidationRules = () => { 
     return [
         body('country')
-            .optional()
             .isString()
             .isLength({ min: 1, max: 50 })
             .matches(/^[\p{L} '-]+$/u),
 
         body('capital')
-            .optional()
             .isString()
             .isLength({ min: 2, max: 50 })
             .matches(/^[\p{L} '.-]+$/u),
 
         body('officialLanguages')
-            .optional()
             .isArray({ min: 1 })
             .custom((languages) => {
                 return languages.every((language) =>
@@ -127,7 +124,6 @@ const countryUpdateValidationRules = () => {
             .withMessage('It must be a valid list of languages'),
 
         body('continent')
-            .optional()
             .isString()
             .custom((continent) => {
                 return continents.some(
@@ -137,7 +133,6 @@ const countryUpdateValidationRules = () => {
             .withMessage('It must be a valid continent name'),
 
         body('independenceDay')
-            .optional()
             .custom((date) => {
                 if (date === null) {
                     return true
@@ -168,19 +163,16 @@ const countryUpdateValidationRules = () => {
             .withMessage('Date valid format: YYYY-MM-DD'),
 
         body('governmentType')
-            .optional()
             .isString()
             .isLength({ min: 4, max: 50 })
             .matches(/^[\p{L} '-]+$/u)
             .withMessage('It must be a valid government type'),
 
         body('population')
-            .optional()
             .isInt({ min: 1 })
                 .withMessage('It must be a positive integer'),
 
         body('landAreaKm2')
-            .optional()
             .isInt({ min: 1 })
                 .withMessage('It must be a positive integer'),
 
@@ -271,7 +263,6 @@ const userValidationRules = () => {
 const userUpdateValidationRules = () => {
     return [
         body('firstName')
-            .optional()
             .isString()
             .withMessage('First name must be a string')
             .isLength({ min: 2, max: 50 })
@@ -280,7 +271,6 @@ const userUpdateValidationRules = () => {
             .withMessage('First name contains invalid characters'),
 
         body('lastName')
-            .optional()
             .isString()
             .withMessage('Last name must be a string')
             .isLength({ min: 2, max: 50 })
@@ -289,12 +279,10 @@ const userUpdateValidationRules = () => {
             .withMessage('Last name contains invalid characters'),
 
         body('email')
-            .optional()
             .isEmail()
             .withMessage('Email must be valid'),
 
         body('role')
-            .optional()
             .isIn(['user', 'admin'])
             .withMessage('Role must be user or admin'),
 
