@@ -10,21 +10,23 @@ const {
     validate 
 } = require('../validator');
 
+const { isAuthenticated } = require("../middleware/authenticate");
+
 router.get('/', countriesController.getAll);
 
 router.get('/:id', idValidation(), validate, countriesController.getSingle);
 
 router.post('/',
     countryValidationRules(),
-    validate,
+    validate, isAuthenticated,
     countriesController.createCountry);
 
 router.put('/:id',
     idValidation(),
     countryUpdateValidationRules(),
-    validate,
+    validate, isAuthenticated,
     countriesController.updateCountry);
 
-router.delete('/:id', idValidation(), validate, countriesController.deleteCountry);
+router.delete('/:id', idValidation(), validate, isAuthenticated, countriesController.deleteCountry);
 
 module.exports = router;
