@@ -1,7 +1,7 @@
 const { parse } = require('dotenv');
 const { body, param, validationResult } = require('express-validator');
 const allowedFields = ['country', 'capital', 'officialLanguages', 'continent', 'independenceDay',
-                        'governmentType', 'population', 'landAreaKm2'
+    'governmentType', 'population', 'landAreaKm2'
 ];
 const continents = ['Africa', 'Asia', 'Europe', 'North America', 'South America', 'Oceania']
 
@@ -12,13 +12,13 @@ const countryValidationRules = () => {
             .isString()
             .isLength({ min: 1, max: 50 })
             .matches(/^[\p{L} '-]+$/u),
-        
+
         body('capital')
             .exists()
             .isString()
             .isLength({ min: 2, max: 50 })
             .matches(/^[\p{L} '.-]+$/u),
-        
+
         body('officialLanguages')
             .exists()
             .isArray({ min: 1 })
@@ -28,7 +28,7 @@ const countryValidationRules = () => {
                 );
             })
             .withMessage('It must be a valid list of languages'),
-        
+
         body('continent')
             .exists()
             .isString()
@@ -38,14 +38,14 @@ const countryValidationRules = () => {
                 );
             })
             .withMessage('It must be a valid continent name'),
-        
+
         body('independenceDay')
             .exists()
             .custom((date) => {
                 if (date === null) {
                     return true
                 }
-                
+
                 if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
                     return false;
                 }
@@ -65,27 +65,27 @@ const countryValidationRules = () => {
                     today.getUTCMonth(),
                     today.getUTCDate()
                 );
-                
+
                 return parseDate.getTime() < todayUTC;
             })
             .withMessage('Date valid format: YYYY-MM-DD'),
-        
+
         body('governmentType')
             .exists()
             .isString()
             .isLength({ min: 4, max: 50 })
             .matches(/^[\p{L} '-]+$/u)
             .withMessage('It must be a valid government type'),
-        
+
         body('population')
             .exists()
             .isInt({ min: 1 })
             .withMessage('It must be a positive integer'),
-        
+
         body('landAreaKm2')
             .exists()
             .isInt({ min: 1 })
-                .withMessage('It must be a positive integer'),
+            .withMessage('It must be a positive integer'),
 
         body().custom((value, { req }) => {
             const extrafields = Object.keys(req.body).filter(
@@ -93,16 +93,16 @@ const countryValidationRules = () => {
             );
 
             if (extrafields.length > 0) {
-                throw new Error('Unknown field: ${extraFields.join(", ")}');
+                throw new Error(`Unknown field: ${extrafields.join(", ")}`);
             }
 
             return true;
         })
-        
+
     ];
 };
 
-const countryUpdateValidationRules = () => { 
+const countryUpdateValidationRules = () => {
     return [
         body('country')
             .isString()
@@ -170,11 +170,11 @@ const countryUpdateValidationRules = () => {
 
         body('population')
             .isInt({ min: 1 })
-                .withMessage('It must be a positive integer'),
+            .withMessage('It must be a positive integer'),
 
         body('landAreaKm2')
             .isInt({ min: 1 })
-                .withMessage('It must be a positive integer'),
+            .withMessage('It must be a positive integer'),
 
         body().custom((value, { req }) => {
             const extrafields = Object.keys(req.body).filter(
@@ -182,7 +182,7 @@ const countryUpdateValidationRules = () => {
             );
 
             if (extrafields.length > 0) {
-                throw new Error('Unknown field: ${extraFields.join(", ")}');
+                throw new Error(`Unknown field: ${extrafields.join(", ")}`);;
             }
 
             return true;
@@ -200,10 +200,10 @@ const idValidation = () => {
     ];
 };
 
-const validate = (req, res, next) => { 
+const validate = (req, res, next) => {
     const errors = validationResult(req);
 
-    if (errors.isEmpty()) { 
+    if (errors.isEmpty()) {
         return next();
     }
 
@@ -215,7 +215,7 @@ const validate = (req, res, next) => {
         })
     );
 
-    return res.status(422).json({
+    return res.status(400).json({
         errors: extractedErrors,
     });
 };
@@ -223,7 +223,7 @@ const validate = (req, res, next) => {
 // -------------------------------------------------------------//
 //                             USERS                            //
 // -------------------------------------------------------------//
-    
+
 const userValidationRules = () => {
     return [
         body('firstName')

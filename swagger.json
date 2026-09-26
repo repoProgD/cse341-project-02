@@ -5,10 +5,10 @@
         "description": "Project 02: API for CSE341",
         "version": "1.0.0"
     },
-    "host": "cse341-project-02-8yzz.onrender.com",
+    "host": "localhost:3000",
     "basePath": "/",
     "schemes": [
-        "https"
+        "http"
     ],
     "paths": {
         "/": {
@@ -84,8 +84,8 @@
                     "201": {
                         "description": "Created"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -111,8 +111,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             },
@@ -166,8 +166,8 @@
                     "404": {
                         "description": "Not Found"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             },
@@ -188,8 +188,8 @@
                     "404": {
                         "description": "Not Found"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             }
@@ -235,8 +235,8 @@
                     "201": {
                         "description": "Created"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     },
                     "500": {
                         "description": "Internal Server Error"
@@ -262,8 +262,8 @@
                     "200": {
                         "description": "OK"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             },
@@ -305,8 +305,8 @@
                     "404": {
                         "description": "Not Found"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             },
@@ -327,8 +327,8 @@
                     "404": {
                         "description": "Not Found"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "400": {
+                        "description": "Bad Request"
                     }
                 }
             }
