@@ -31,11 +31,15 @@ const getSingle = async (req, res, next) => {
             .find({ _id: countryId });
 
         const countries = await result.toArray();
-            
+
+        if (countries.length === 0) {
+            return res.status(404).json('Country not found.');
+        }
+
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(countries);
-    
-    } catch (error) { 
+
+    } catch (error) {
         next(error);
     }
 };
