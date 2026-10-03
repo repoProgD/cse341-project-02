@@ -17,30 +17,31 @@ const app = express();
 // server port that will listen for incoming requests from the frontend
 const port = process.env.PORT || 3000;
 
+process.on('uncaughtException', err => console.error('UNCAUGHT:', err));
+process.on('unhandledRejection', err => console.error('UNHANDLED:', err));
+
+// Render finishes HTTPS in its proxy
+app.set('trust proxy', 1);
+
 app
     .use(bodyParser.json())
-    .use(session({
-        secret: "secret",
-        resave: false,
-        saveUninitialized: true,
-    }))
-
-    .use(passport.initialize())
-    .use(passport.session())
     .use(cors({
         origin: '*',
         methods: ['GET, POST, PUT, DELETE']
     }))
-    .use('/', require('./routes'));
-
-// Error handler
-app.use((err, req, res, next) => {
-    console.error(err);
-
-    res.status(500).json({
-        error: 'Internal server error'
-    });
-});
+    .use(session({
+        secret: process.env.SESSION_SECRET || 'dev-secret',
+        resave: false,
+        saveUninitialized: false,
+        proxy: true,
+        cookie: {
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: 1000 * 60 * 60 * 24
+        }
+    }))
+    .use(passport.initialize())
+    .use(passport.session());
 
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
@@ -48,35 +49,47 @@ passport.use(new GitHubStrategy({
     callbackURL: process.env.CALLBACKURL
 },
     function (accessToken, refreshToken, profile, done) {
-        //User.findOrCreate({githubId: profile.id}, function (err, user){
         return done(null, profile);
-        // });
     }
 ));
 
-passport.serializeUser((user, done) => {
-    done(null, user);
+passport.serializeUser((user, done) => done(null, user));
+passport.deserializeUser((user, done) => done(null, user));
+
+// Auth routes before the main routes to ensure that the user is authenticated before accessing any other routes
+app.get('/', (req, res) => {
+    res.send(
+        req.session.user !== undefined
+            ? `Logged in as ${req.session.user.username}`
+            : 'Logged Out'
+    );
 });
 
-passport.deserializeUser((user, done) => {
-    done(null, user);
-});
-
-app.get('/', (req, res) => { res.send(req.session.user !== undefined ? `Logged in as ${req.session.user.username}` : "Logged Out") })
-
-app.get('/auth/github/callback', passport.authenticate('github', {
-    failureRedirect: '/api-docs', session: false
-}),
-    (req, res) => {
-        req.session.user = req.user;
-        res.redirect('/');
+app.get('/auth/github/callback',
+    passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
+    (req, res, next) => {
+        console.log('Callback OK, user:', req.user && req.user.username);
+        req.session.user = {
+            id: req.user.id,
+            username: req.user.username,
+            displayName: req.user.displayName
+        };
+        // Wait until the session is saved before redirecting to avoid a race condition
+        req.session.save(err => (err ? next(err) : res.redirect('/')));
     });
+
+app.use('/', require('./routes'));
+
+// Error handler (Always after all other middleware and routes)
+app.use((err, req, res, next) => {
+    console.error('EXPRESS ERROR:', err);
+    res.status(500).json({ error: 'Internal server error', detail: err.message });
+});
 
 mongodb.initDB((err) => {
     if (err) {
         console.log(err);
     } else {
-        // Start "listening" for requests
         app.listen(port, () => {
             console.log(`DataBase is listening and Node is running on port ${port}`);
         });
