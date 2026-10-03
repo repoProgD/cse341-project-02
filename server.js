@@ -65,7 +65,12 @@ app.get('/', (req, res) => {
     );
 });
 
-app.get('/auth/github/callback',
+app.get('/auth/github/callback', (req, res) => {
+    console.log('CALLBACK HIT', req.query);
+    res.send('callback reached');
+});
+
+/*app.get('/auth/github/callback',
     passport.authenticate('github', { failureRedirect: '/api-docs', session: false }),
     (req, res, next) => {
         console.log('Callback OK, user:', req.user && req.user.username);
@@ -76,7 +81,7 @@ app.get('/auth/github/callback',
         };
         // Wait until the session is saved before redirecting to avoid a race condition
         req.session.save(err => (err ? next(err) : res.redirect('/')));
-    });
+    });*/
 
 app.use('/', require('./routes'));
 
