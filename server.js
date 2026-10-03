@@ -91,7 +91,19 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Internal server error', detail: err.message });
 });
 
+app.listen(port, () => {
+    console.log(`Node is running on port ${port}`);
+});
+
 mongodb.initDB((err) => {
+    if (err) {
+        console.error('MongoDB ERROR:', err);
+    } else {
+        console.log('MongoDB connected');
+    }
+});
+
+/*mongodb.initDB((err) => {
     if (err) {
         console.log(err);
     } else {
@@ -99,4 +111,4 @@ mongodb.initDB((err) => {
             console.log(`DataBase is listening and Node is running on port ${port}`);
         });
     }
-});
+});*/
